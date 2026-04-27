@@ -21,6 +21,10 @@ public class CustomWebApplicationFactory : WebApplicationFactory<Program>, IAsyn
     {
         await _dbContainer.StartAsync();
         Environment.SetEnvironmentVariable("ConnectionStrings__DefaultConnection", _dbContainer.GetConnectionString());
+
+        using var scope = Services.CreateScope();
+        var db = scope.ServiceProvider.GetRequiredService<AppDbContext>();
+        await db.Database.MigrateAsync();
     }
 
     public new async Task DisposeAsync()

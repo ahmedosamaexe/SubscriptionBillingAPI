@@ -75,7 +75,6 @@ public class SubscriptionsControllerTests : IClassFixture<CustomWebApplicationFa
         using (var scope = _factory.Services.CreateScope())
         {
             var db = scope.ServiceProvider.GetRequiredService<AppDbContext>();
-            await db.Database.EnsureCreatedAsync();
             db.Users.Add(user);
             db.Subscriptions.Add(subscription);
             db.UsageLogs.Add(usageLog);
